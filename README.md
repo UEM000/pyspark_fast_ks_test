@@ -24,7 +24,7 @@ The implementation provides a scalable solution for distribution comparison in b
 
 Our experiments show significant data reduction while maintaining accuracy:
 
-| Dataset Size | Error Parameter | Data Reduction | Statistic Difference |
+| Dataset Size | Error Parameter | Required percentage of data | Statistic Difference |
 |-------------|----------------|----------------|---------------------|
 | 1,000 | 0.005 | ~60% | < 0.0001 |
 | 10,000 | 0.005 | ~40% | < 0.0001 |
@@ -191,7 +191,7 @@ MIT License
 
 Наши эксперименты показывают значительное сокращение данных при сохранении точности:
 
-| Размер данных | Параметр ошибки | Сокращение данных | Разница статистик |
+| Размер данных | Параметр ошибки | Необходимый процент данных | Разница статистик |
 |-------------|----------------|----------------|------------------|
 | 1,000 | 0.005 | ~60% | < 0.0001 |
 | 10,000 | 0.005 | ~40% | < 0.0001 |
