@@ -1,4 +1,3 @@
-```markdown
 # Fast Approximate Kolmogorov-Smirnov Test for PySpark
 
 [English](#english) | [Русский](#russian)
