@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 from pyspark.sql import SparkSession
 from scipy.stats import ks_2samp
-from statistic_spark import MyKStest
+from statistic_spark import ApproxKStest
 
 # Создание Spark сессии
 spark = SparkSession.builder \
@@ -59,7 +59,7 @@ def test_same_distribution():
     n = 10000
     df = generate_test_data(n, n, mean1=0, mean2=0, std1=1, std2=1)
     
-    ks_test = MyKStest(df, 'value', 'label', reliability=0.05, error=0.01)
+    ks_test = ApproxKStest(df, 'value', 'label', reliability=0.05, error=0.01)
     result = ks_test.calculate()
     
     control_data = df.filter(df['label'] == 1).select('value').toPandas()['value'].values
@@ -93,7 +93,7 @@ def test_different_distributions():
     n = 10000
     df = generate_test_data(n, n, mean1=0, mean2=2, std1=1, std2=1)
     
-    ks_test = MyKStest(df, 'value', 'label', reliability=0.05, error=0.01)
+    ks_test = ApproxKStest(df, 'value', 'label', reliability=0.05, error=0.01)
     result = ks_test.calculate()
     
     control_data = df.filter(df['label'] == 1).select('value').toPandas()['value'].values
@@ -132,7 +132,7 @@ def test_multiple_columns():
     
     spark_df = spark.createDataFrame(df)
     
-    ks_test = MyKStest(spark_df, ['col1', 'col2'], 'label', reliability=0.05, error=0.01)
+    ks_test = ApproxKStest(spark_df, ['col1', 'col2'], 'label', reliability=0.05, error=0.01)
     result = ks_test.calculate()
     
     print(f"\nКолонка 'col1' (одинаковые распределения):")
@@ -160,7 +160,7 @@ def test_small_samples():
     df = generate_test_data(n, n, mean1=0, mean2=1, std1=1, std2=1)
     
     try:
-        ks_test = MyKStest(df, 'value', 'label', reliability=0.05, error=0.01)
+        ks_test = ApproxKStest(df, 'value', 'label', reliability=0.05, error=0.01)
         result = ks_test.calculate()
         
         print(f"\nSpark KS Test (n={n}):")
@@ -192,7 +192,7 @@ def test_accuracy_comparison(output_file: str = "ks_test_results.csv"):
         for n in sizes:
             df = generate_test_data(n, n, mean1=0, mean2=0.5, std1=1, std2=1)
             
-            ks_test = MyKStest(df, 'value', 'label', reliability=0.05, error=error_param)
+            ks_test = ApproxKStest(df, 'value', 'label', reliability=0.05, error=error_param)
             result = ks_test.calculate()
             
             control_data = df.filter(df['label'] == 1).select('value').toPandas()['value'].values
